@@ -12,7 +12,8 @@
 (function() {
     'use strict';
 
-    let x = document.querySelector('form[name="postcontrols"]');
+    var x = document.querySelector('form[name="postcontrols"]');
+    var threadID = document.querySelector('form[name="postcontrols"]').children[1].id;
     if (!x) return
 
         var current = false
@@ -24,7 +25,7 @@
         x.style.margin = "auto";
 
     //get current ID from localstorage
-    current = localStorage.getItem("currElem")
+    current = localStorage.getItem(threadID)
     console.log("start 1: " + current)
     if (current === null) current = false
     console.log("start 2: " + current)
@@ -96,7 +97,7 @@
                 current.style.boxShadow = "0 0 20px pink"
             }
             //save current in localstorage
-            localStorage.setItem("currElem", current.id)
+            localStorage.setItem(threadID, current.id)
         }
         window.onmousedown = e => {
             globalX = e.clientX
