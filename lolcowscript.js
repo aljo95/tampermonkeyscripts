@@ -12,25 +12,37 @@
 (function() {
     'use strict';
 
-    var x = document.querySelector('form[name="postcontrols"]');
-    var threadID = document.querySelector('form[name="postcontrols"]').children[1].id;
+    const activateScript = (c) => {
+        c.style.outline = "4px solid pink"
+        c.style.borderRadius = "10px"
+        c.style.marginTop = "15px"
+        c.style.marginBottom = "15px"
+        c.style.boxShadow = "0 0 20px pink"
+    }
+
+    const disableScript = (c) => {
+        c.style.outline = "none"
+        c.style.borderRadius = "0px"
+        c.style.marginTop = "2px"
+        c.style.marginBottom = "2px"
+        c.style.boxShadow = "0 0 0px"       
+    }
+
+    var x = document.querySelector('form[name="postcontrols"]')
+    var threadID = document.querySelector('form[name="postcontrols"]').children[1].id
     if (!x) return
 
-        var current = false
-        var enableScript = false
-        var globalX = 0
-        var globalY = 0
-
-        //x.style.width = "60%";
-        x.style.margin = "auto";
+    var current = false
+    var enableScript = false
+    var globalX = 0
+    var globalY = 0
+    x.style.margin = "auto"
 
     //get current ID from localstorage
     current = localStorage.getItem(threadID)
     console.log("start 1: " + current)
     if (current === null) current = false
     console.log("start 2: " + current)
-
-
 
     const getPosAndScroll = (topDiv) => {
         if ((topDiv.id).substring(0, 7) === "thread_") {
@@ -42,59 +54,66 @@
         window.scroll(0, newScroll)
     }
 
-
     if (typeof current === "string" && current !== "") {
         current = document.getElementById(current)
-        x.style.width = "60%";
+        x.style.width = "60%"
         enableScript = true
         setTimeout(() => {
                 getPosAndScroll(current)
         }, 500)
 
-        current.style.outline = "4px solid pink";
-        current.style.borderRadius = "10px";
-        current.style.marginTop = "15px";
-        current.style.marginBottom = "15px";
+        activateScript(current)
+        /*
+        current.style.outline = "4px solid pink"
+        current.style.borderRadius = "10px"
+        current.style.marginTop = "15px"
+        current.style.marginBottom = "15px"
         current.style.boxShadow = "0 0 20px pink"
-
+        */
     }
-
-
-
 
 
         window.onmouseup = e => {
 
-            if (!enableScript) return;//comment out this for different funcionatlity
+            if (!enableScript) return //comment out this for different funcionatlity
 
-            if (globalX !== e.clientX || globalY !== e.clientY) return;
+            if (globalX !== e.clientX || globalY !== e.clientY) return
             console.log(current)
 
             if (current) {
+                disableScript(current)
+                /*
                 current.style.outline = "none"
-                current.style.borderRadius = "0px";
-                current.style.marginTop = "2px";
-                current.style.marginBottom = "2px";
+                current.style.borderRadius = "0px"
+                current.style.marginTop = "2px"
+                current.style.marginBottom = "2px"
                 current.style.boxShadow = "0 0 0px"
-                localStorage.removeItem("currElem");
+                */
+                localStorage.removeItem("currElem")
             }
             current = e.target
             console.log(current)
 
             if (current.className === "post reply") {
-                current.style.outline = "4px solid pink";
-                current.style.borderRadius = "10px";
-                current.style.marginTop = "15px";
-                current.style.marginBottom = "15px";
+                activateScript(current)
+                /*
+                current.style.outline = "4px solid pink"
+                current.style.borderRadius = "10px"
+                current.style.marginTop = "15px"
+                current.style.marginBottom = "15px"
                 current.style.boxShadow = "0 0 20px pink"
+                */
             }
             else if (current.className === "intro" || current.className === "body") {
-                current = current.parentElement;
-                current.style.outline = "4px solid pink";
-                current.style.borderRadius = "10px";
-                current.style.marginTop = "15px";
-                current.style.marginBottom = "15px";
+                current = current.parentElement
+                activateScript(current)
+                /*
+                current.style.outline = "4px solid pink"
+                current.style.borderRadius = "10px"
+                current.style.marginTop = "15px"
+                current.style.marginBottom = "15px"
                 current.style.boxShadow = "0 0 20px pink"
+                */
             }
             //save current in localstorage
             localStorage.setItem(threadID, current.id)
@@ -115,38 +134,46 @@
 
 
             if (e.key === "§") {
-                enableScript ? currentTopDiv = document.elementFromPoint(685, 40) : currentTopDiv = document.elementFromPoint(230, 40);
+                enableScript ? currentTopDiv = document.elementFromPoint(685, 40) : currentTopDiv = document.elementFromPoint(230, 40)
                 if (enableScript) {
 
-                    x.style.width = "100%";
+                    x.style.width = "100%"
                     if (current) {
                         //comment out this block for different functionality
-                        current.style.outline = "none";
-                        current.style.borderRadius = "0px";
-                        current.style.marginTop = "2px";
-                        current.style.marginBottom = "2px";
+                        disableScript(current)
+                        /*
+                        current.style.outline = "none"
+                        current.style.borderRadius = "0px"
+                        current.style.marginTop = "2px"
+                        current.style.marginBottom = "2px"
                         current.style.boxShadow = "0 0 0px"
-
+                        */
                     }
-                    enableScript = false;
+                    enableScript = false
                 } else if (!enableScript) {
-                    x.style.width = "60%";
+                    x.style.width = "60%"
                     if (current.className === "post reply") {
-                        current.style.outline = "4px solid pink";
-                        current.style.borderRadius = "10px";
-                        current.style.marginTop = "15px";
-                        current.style.marginBottom = "15px";
+                        activateScript(current)
+                        /*
+                        current.style.outline = "4px solid pink"
+                        current.style.borderRadius = "10px"
+                        current.style.marginTop = "15px"
+                        current.style.marginBottom = "15px"
                         current.style.boxShadow = "0 0 20px pink"
+                        */
                     }
                     else if (current.className === "intro" || current.className === "body") {
-                        current = current.parentElement;
-                        current.style.outline = "4px solid pink";
-                        current.style.borderRadius = "10px";
-                        current.style.marginTop = "15px";
-                        current.style.marginBottom = "15px";
+                        current = current.parentElement
+                        activateScript(current)
+                        /*
+                        current.style.outline = "4px solid pink"
+                        current.style.borderRadius = "10px"
+                        current.style.marginTop = "15px"
+                        current.style.marginBottom = "15px"
                         current.style.boxShadow = "0 0 20px pink"
+                        */
                     }
-                    enableScript = true;
+                    enableScript = true
                 }
                 getPosAndScroll(currentTopDiv)
             }
