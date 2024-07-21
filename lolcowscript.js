@@ -40,9 +40,15 @@
 
     //get current ID from localstorage
     current = localStorage.getItem(threadID)
-    console.log("start 1: " + current)
+    //console.log("start 1: " + current)
     if (current === null) current = false
-    console.log("start 2: " + current)
+
+    if (!document.querySelector("#current")) {
+        localStorage.removeItem(threadID)
+        current = false
+    }
+
+    //console.log("start 2: " + current)
 
     const getPosAndScroll = (topDiv) => {
         if ((topDiv.id).substring(0, 7) === "thread_") {
